@@ -34,6 +34,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rake', '~> 10.0')
   s.add_development_dependency('rubocop', '~> 0.25')
 
+  s.add_dependency('colorize', '~> 0.8')
+
   if s.respond_to? :specification_version then
     s.specification_version = 3
   end

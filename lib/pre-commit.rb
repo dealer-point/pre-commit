@@ -1,4 +1,5 @@
 require 'pre-commit/runner'
+require 'colorize'
 
 module PreCommit
 

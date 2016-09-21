@@ -9,7 +9,7 @@ module PreCommit
         DEFAULTS =
         {
           :warnings => [],
-          :checks   => [:common, :rails]
+          :checks   => []
         }
 
         def self.priority
