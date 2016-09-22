@@ -30,7 +30,15 @@ module PreCommit
         args = config_file_flag + user_supplied_flags + ["--force-exclusion"] + staged_files
 
         success, captured = capture { ::RuboCop::CLI.new.run(args) == 0 }
-        captured unless success
+        colorize(captured) unless success
+      end
+
+      def colorize(value)
+        value.gsub(/^([^:\n]+):(\d+):(\d+):(.+)$/) do |line|
+          "#{$1.to_s.cyan}:#{$2.to_s.magenta}:#{$3.to_s.magenta}: #{$4.to_s.white}"
+        end.gsub(/(\^+)/) do |line|
+          "#{$1.to_s.red}"
+        end
       end
 
       def filter_staged_files(staged_files)

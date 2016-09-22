@@ -2,15 +2,17 @@ require 'pre-commit/checks/shell'
 
 module PreCommit
   module Checks
-    class ScssLint < Shell
+    class Eslint < Shell
 
       def call(staged_files)
-        staged_files = staged_files.grep(/\.scss$/)
+        return "Eslint not installed".red unless File.exist?("./node_modules/.bin/eslint")
+
+        staged_files = staged_files.grep(/\.js$/)
         return if staged_files.empty?
 
         result =
         in_groups(staged_files).map do |files|
-          args = %w{scss-lint} + config_file_flag + files
+          args = %w{./node_modules/.bin/eslint} + config_file_flag + files
           colorize(execute(args))
         end.compact
 
@@ -18,8 +20,8 @@ module PreCommit
       end
 
       def colorize(value)
-        value.gsub(/^([^:\n]+):(\d+)\s([^\s]+)\s([^:]+):\s(.+)$/) do |line|
-          "#{$1.to_s.cyan}:#{$2.to_s.magenta} #{$3} #{$4.to_s.green}: #{$5.to_s.white}"
+        value.gsub(/^(\s+\d+):(\d+)(\s+[^\s]+)(\s+.*?)$/) do |line|
+          "#{$1.to_s.cyan}:#{$2.to_s.cyan}#{$3.to_s.red}#{$4.to_s.white}"
         end
       end
 

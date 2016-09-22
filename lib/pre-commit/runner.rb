@@ -69,12 +69,10 @@ WARNINGS
     end
 
     def checks(list)
-      <<-ERRORS
-pre-commit: Stopping commit because of errors.
-#{errors_to_string(list)}
-pre-commit: You can bypass this check using `git commit -n`
-
-ERRORS
+      result = errors_to_string(list)
+      result += "\npre-commit: Stopping commit because of errors.\n".red
+      result += "\npre-commit: You can bypass this check using `git commit -n`".white
+      result
     end
 
     def errors_to_string(list)

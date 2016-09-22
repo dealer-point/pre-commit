@@ -1,5 +1,6 @@
 require 'pre-commit/checks/plugin'
 require 'shellwords'
+require 'open3'
 
 module PreCommit
   module Checks
