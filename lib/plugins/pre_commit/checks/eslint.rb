@@ -20,7 +20,8 @@ module PreCommit
       end
 
       def colorize(value)
-        value.to_s.gsub(/^(\s+\d+):(\d+)(\s+[^\s]+)(\s+.*?)$/) do |line|
+        return nil if value.nil?
+        value.gsub(/^(\s+\d+):(\d+)(\s+[^\s]+)(\s+.*?)$/) do |line|
           "#{$1.to_s.cyan}:#{$2.to_s.cyan}#{$3.to_s.red}#{$4.to_s.white}"
         end
       end
